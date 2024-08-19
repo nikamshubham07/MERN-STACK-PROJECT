@@ -2,19 +2,22 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import cors from 'cors'
 import mongoose from "mongoose"
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import authRoute from './Routes/auth.js'
 
-dotenv.config()
+dotenv.config();
 const app = express()
-const port = 8000
+
+
+const port = 5000
 
 const corsOptions = {
     origin:true
 }
 
-//  database connection
+// //  database connection
 mongoose.set('strictQuery', false)
+
 const connectDB = async()=>{
     try{
          await mongoose.connect(process.env.MONGO_URL, {

@@ -9,7 +9,7 @@ dotenv.config();
 const app = express()
 
 
-const port = 5000
+const port = 6000
 
 const corsOptions = {
     origin:true

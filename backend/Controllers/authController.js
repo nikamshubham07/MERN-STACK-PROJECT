@@ -69,7 +69,7 @@ export const register = async(req,res)=>{
 
 export const login = async(req,res)=>{
 
-    const {email,  password} = req.body
+    const {email} = req.body
     try{
 
         let user =null
@@ -86,10 +86,12 @@ export const login = async(req,res)=>{
 
         if(!user){
             return res.status(404).json({message: "User not found"});
-
-            const isPasswordMatch = await bcrypt.compare(password, user.password)
         }
-
+            const isPasswordMatch = await bcrypt.compare(
+                req.body.password, 
+                user.password
+            )
+        
         if(!isPasswordMatch){
             return res.status(400).json({status:false, message: "Invalid credentials"});
         }

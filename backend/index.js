@@ -11,8 +11,7 @@ import reviewRoute from './Routes/review.js'
 dotenv.config();
 const app = express()
 
-
-const port = 6000
+const port = 5001;
 
 const corsOptions = {
     origin:true
@@ -22,10 +21,11 @@ const corsOptions = {
 mongoose.set('strictQuery', false)
 
 const connectDB = async()=>{
+    // console.log(process.env.MONGO_URL)
     try{
          await mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
         })
 
         console.log('mongoDB database is connected')

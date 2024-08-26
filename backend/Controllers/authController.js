@@ -12,7 +12,7 @@ const generateToken = (user) =>{
 }
 
 export const register = async(req,res)=>{
-    // console.log(req.body)
+    console.log(req.body);
     const {email, password, name, role, photo, gender} = req.body
 
     try{

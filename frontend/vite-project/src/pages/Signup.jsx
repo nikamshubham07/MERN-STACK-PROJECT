@@ -33,6 +33,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const data = await uploadImageToCloudinary(file);
+      console.log(data)
       if (data && data.url) {
         setPreviewURL(data.url);
         setSelectedFile(data.url);
@@ -52,6 +53,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
+      
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
@@ -65,15 +67,16 @@ const Signup = () => {
       if (!res.ok) {
         throw new Error(message);
       }
+      // console.log('Response:', res);
 
+      setLoading(false);
       toast.success(message);
       // console.log(data)
       navigate('/login');
     } catch (err) {
       toast.error(err.message);
-    } finally {
       setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -191,7 +194,10 @@ const Signup = () => {
                   type="submit"
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
                 >
-                  {loading ? <HashLoader size={35} color="#ffffff" /> : `Sign Up`}
+                  { loading ? (
+                    <HashLoader size={35} color="#ffffff" />
+                   ) : (
+                    "Sign Up")}
                 </button>
               </div>
 

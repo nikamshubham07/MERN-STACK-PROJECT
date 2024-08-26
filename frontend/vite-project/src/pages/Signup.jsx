@@ -6,6 +6,7 @@ import { BASE_URL } from '../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 
+
 const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewURL, setPreviewURL] = useState('');

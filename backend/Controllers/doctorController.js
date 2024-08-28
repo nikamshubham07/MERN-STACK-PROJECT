@@ -2,7 +2,7 @@
 
 // import { $options, $regex } from 'sift'
 import Doctor from '../models/DoctorSchema.js'
-import BookingSchema from '../models/BookingSchema.js'
+import Booking from '../models/BookingSchema.js'
 
 export const updateDoctor = async(req, res)=>{
     const id = req.params.id
@@ -75,7 +75,7 @@ export const getDoctorProfile = async(req, res) =>{
             return res.status(404).json({sucess:false, message:"Doctor not found"})
         }
         const {password, ...rest} = doctor._doc
-        const appointments = await Booking.find({doctor:docorId})
+        const appointments = await Booking.find({doctor:doctorId})
 
 
         res.status(200).json({sucess:true, message:"Profile info is getting", data:{ ...rest, appointments}})

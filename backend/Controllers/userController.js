@@ -74,9 +74,9 @@ export const getMyAppointments = async(req, res)=>{
     try{
         const bookings = await Booking.find({user:req.userId})
 
-        const docotIds = bookings.map(el=>el.doctor.id)
+        const doctorIds = bookings.map(el=>el.doctor.id)
 
-        const doctors = await Doctor.find({_id: {$in:docotIds}}).select('-password')
+        const doctors = await Doctor.find({_id: {$in:doctorIds}}).select('-password')
         res.status(200).json({sucess:true, message:"Appointment are getting", data:doctors}) 
     }
     catch(err){

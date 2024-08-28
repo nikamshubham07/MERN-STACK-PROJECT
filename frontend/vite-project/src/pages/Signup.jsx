@@ -68,11 +68,9 @@ const Signup = () => {
       if (!res.ok) {
         throw new Error(message);
       }
-      // console.log('Response:', res);
 
       setLoading(false);
       toast.success(message);
-      // console.log(data)
       navigate('/login');
     } catch (err) {
       toast.error(err.message);

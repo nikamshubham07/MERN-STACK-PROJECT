@@ -2,6 +2,7 @@
 
 // import { $options, $regex } from 'sift'
 import Doctor from '../models/DoctorSchema.js'
+import BookingSchema from '../models/BookingSchema.js'
 
 export const updateDoctor = async(req, res)=>{
     const id = req.params.id
@@ -62,5 +63,24 @@ export const getAllDoctor = async(req, res)=>{
     }
     catch(err){
         res.status(404).json({sucess:false, message:"Not Found"})
+    }
+}
+
+export const getDoctorProfile = async(req, res) =>{
+    const doctorId = req.userId
+    try{
+        const doctor = await Doctor.findById(doctorId)
+        
+        if(!doctor){
+            return res.status(404).json({sucess:false, message:"Doctor not found"})
+        }
+        const {password, ...rest} = doctor._doc
+        const appointments = await Booking.find({doctor:docorId})
+
+
+        res.status(200).json({sucess:true, message:"Profile info is getting", data:{ ...rest, appointments}})
+    }
+    catch(err){
+        res.status(500).json({sucess:false, message:"Something went worng, cannot get"})
     }
 }

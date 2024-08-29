@@ -1,16 +1,19 @@
-import React from 'react'
-import { authContext } from '../context/AuthContext'
-import { useContext } from 'react'
-import { Navigate } from 'react-router-dom'
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { authContext } from '../context/AuthContext';
 
-const ProtectedRoute = (children, allowedRoles) => {
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { token, role } = useContext(authContext);
+  
+  // Check if the role is allowed
+  const isAllowed = allowedRoles.includes(role);
+  
+  // Determine if the route should be accessible
+  if (token && isAllowed) {
+    return children;
+  } else {
+    return <Navigate to='/login' replace={true} />;
+  }
+};
 
-    const {token, role} = useContext(authContext)
-    const isAllowed = allowedRoles.includes(role)
-    const accessibleRoute = token && isAllowed ? children : <Navigate to='/login' replace={true}/>
-
-
-  return accessibleRoute;
-}
-
-export default ProtectedRoute
+export default ProtectedRoute;

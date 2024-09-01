@@ -5,25 +5,31 @@ import { BASE_URL, token } from '../../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 
-const Profile = ({user}) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-//   const [previewURL, setPreviewURL] = useState('');
+const Profile = ({ user }) => {
   const [loading, setLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     photo: null,
     gender: '',
-    bloodType:'',
+    bloodType: '',
   });
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    setFormData({name:user.name, email:user.email, photo:user.photo, gender:user.gender, bloodType:user.bloodType })
-  },[user])
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || '',
+        email: user.email || '',
+        password: '',
+        photo: user.photo || null,
+        gender: user.gender || '',
+        bloodType: user.bloodType || '',
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,8 +43,6 @@ const Profile = ({user}) => {
     try {
       const data = await uploadImageToCloudinary(file);
       if (data && data.url) {
-        // setPreviewURL(data.url);
-        setSelectedFile(data.url);
         setFormData({ ...formData, photo: data.url });
       } else {
         throw new Error('Failed to upload image.');
@@ -56,25 +60,25 @@ const Profile = ({user}) => {
 
     try {
       const res = await fetch(`${BASE_URL}/users/${user._id}`, {
-        method: 'put',
+        method: 'PUT',
         headers: {
-          'Content-Type': 'application/json', 
-          Authorization:`Bearer ${token}`
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const { message } = await res.json();
 
       if (!res.ok) {
-        throw new Error(message);
+        throw new Error(message || 'Failed to update profile');
       }
 
-      setLoading(false);
       toast.success(message);
       navigate('/user/profile/me');
     } catch (err) {
-      toast.error(err.message || 'Failed to register');
+      toast.error(err.message || 'Failed to update profile');
+    } finally {
       setLoading(false);
     }
   };
@@ -102,7 +106,8 @@ const Profile = ({user}) => {
             value={formData.email}
             onChange={handleInputChange}
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-            required
+            aria-readonly
+            readOnly
           />
         </div>
 
@@ -116,6 +121,7 @@ const Profile = ({user}) => {
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
           />
         </div>
+
         <div className="mb-5">
           <input
             type="text"
@@ -129,7 +135,6 @@ const Profile = ({user}) => {
         </div>
 
         <div className="mb-5 flex items-center justify-between">
-
           <label className="text-headingColor font-bold text-[16px] leading-7">
             Gender:
             <select
@@ -167,7 +172,7 @@ const Profile = ({user}) => {
               htmlFor="customFile"
               className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
             >
-              Upload Photo
+              {selectedFile? selectedFile.name: "Upload Photo"}
             </label>
           </div>
         </div>
@@ -181,7 +186,7 @@ const Profile = ({user}) => {
             {loading ? (
               <HashLoader size={25} color="#ffffff" />
             ) : (
-              "Updata"
+              'Update'
             )}
           </button>
         </div>

@@ -21,7 +21,8 @@ const Contact = () => {
             </label>
             <input type="text" id="subject" placeholder='Let us know how we can help you' className='form__input mt-1' />
           </div>
-          <div>
+          <div> 
+            
             <label 
               htmlFor="subject" 
               className='form__lable'
@@ -37,3 +38,4 @@ const Contact = () => {
 }
 
 export default Contact
+     

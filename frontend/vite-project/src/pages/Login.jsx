@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../config';
 import { toast } from 'react-toastify';
 import { authContext } from '../context/AuthContext.jsx';
+import HashLoader from 'react-spinners/HashLoader.js';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ const Login = () => {
         },
       });
 
-      // console.log(result, 'login data');
+      console.log(result, 'login data');
 
       // Use the correct result.message for success toast
       setLoading(false);
@@ -99,7 +100,7 @@ const Login = () => {
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
               disabled={loading} // Disable button when loading
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? <HashLoader size={25} color='#fff'/> : 'Login'}
             </button>
           </div>
 

@@ -7,13 +7,11 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   
   // Check if the role is allowed
   const isAllowed = allowedRoles.includes(role);
-  
+
+  const accessibleRoute = token && isAllowed ? children : <Navigate to="/login" replace={true}/>
   // Determine if the route should be accessible
-  if (token && isAllowed) {
-    return children;
-  } else {
-    return <Navigate to='/login' replace={true} />;
-  }
+  
+  return accessibleRoute;
 };
 
 export default ProtectedRoute;

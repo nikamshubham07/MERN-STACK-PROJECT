@@ -72,15 +72,15 @@ const Header = () => {
           {/* Nav Right */}
           <div className='flex items-center gap-4'>
           {
-  token && user ? (
-    <div>
-      <Link to={`${role === 'doctor' ? '/doctors/profile/me' : '/users/profile/me'}`}>
-        <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
-          <img src={user?.photo} alt='' className='w-full rounded-full' />
-        </figure>
-        <h2>{user?.name}</h2>
-      </Link>
-    </div>
+             token && user ? (
+          <div>
+            <Link to={`${role === 'doctor' ? '/doctors/profile/me' : '/users/profile/me'}`}>
+            <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
+            {/* <img src={user?.photo} alt='' className='w-full rounded-full' /> */}
+            </figure>
+            {/* <h2>{user?.name}</h2> */}
+            </Link>
+          </div>
   ) : (
     <Link to='/login'>
       <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[40px] flex items-center justify-center rounded-[50px]'>

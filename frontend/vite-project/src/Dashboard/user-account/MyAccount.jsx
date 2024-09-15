@@ -4,7 +4,7 @@ import { authContext } from './../../context/AuthContext';
 // import userImg from '../../assets/images/doctor-img01.png';
 import MyBookings from './MyBookings';
 import Profile from './Profile';
-import useGetProfile from '../../hooks/useFetchData';
+import useFetchData from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 import Loading from '../../Loader/loading';
 import Error from '../../components/Error/Error';
@@ -13,9 +13,11 @@ const MyAccount = () => {
   const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState('bookings');
   const navigate = useNavigate();
-  const {data:userData, loading, error } = useGetProfile(`${BASE_URL}/users/profile/me`);
+  const {data:userData, loading, error } = useFetchData(`${BASE_URL}/users/profile/me`);
 
   console.log(userData, 'userdata');
+
+  console.log("loading : ",loading, "error: ",error);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -64,7 +66,7 @@ const MyAccount = () => {
               {tab === 'settings' && <Profile user={userData} />}
             </div>
           </div>
-        )}
+         )} 
       </div>
     </section>
   );

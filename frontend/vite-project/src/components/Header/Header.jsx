@@ -84,7 +84,7 @@ const Header = () => {
   ) : (
     <Link to='/login'>
       <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[40px] flex items-center justify-center rounded-[50px]'>
-        {loading ? <HashLoader size={25} color='#fff'/> :'Login'}
+       Login
       </button>
     </Link>
   )

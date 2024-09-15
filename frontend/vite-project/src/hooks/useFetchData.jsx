@@ -8,31 +8,42 @@ const useFetchData = (url) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      console.log("token: ",token);  // For debugging purposes, make sure token is correct
       setError(null); // Reset error before new request
+      // console.log(url)
       try {
-        const res = await fetch(url,{
-            headers:{Authorization: `Bearer ${token}` },
-          });
+        // Fetch the data from the API
+        // setLoading(true);
+        const res = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ensure token is valid
+            'Content-Type': 'application/json'
+          }
+        });
 
+        console.log("res: ",res);
+    
+        // Check if the response is OK (status code 200-299)
         if (!res.ok) {
-          const result = await res.json();
-          throw new Error(result.message || 'Failed to fetch data');
+          const errorResult = await res.json(); // Parse error message
+          throw new Error(errorResult.message || 'Failed to fetch data');
+  
         }
-
-        setData(result.data)
-        setLoading(false)
-        // const result = await res.json();
-        // setData(result.data || []); // Assuming 'result.data' is the desired array
+    
+        // Parse the JSON response
+        const result = await res.json();
+        setData(result.data); // Assuming 'result.data' is the array/object you need
+        setLoading(false);
       } catch (err) {
-        // setError(err.message || 'Something went wrong');
-        setLoading(false)
-        setError(err.message)
-      // } finally {
-      //   setLoading(false); // Ensure loading is set to false in both success and error cases
-      // }
+        // If there's any error, set the error message
+        // console.log(err)
+        setError(err.message || 'Something went wrong');
+        setLoading(false);
+      } finally {
+        // Always stop loading, regardless of success or failure
+        setLoading(false);
+      }
     };
-  }
     fetchData();
   }, [url]);
 

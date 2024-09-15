@@ -5,7 +5,7 @@ import {RiLinkedinFill} from 'react-icons/ri'
 import { AiFillYoutube, AiFillGithub, AiOutlineInstagram, AiFillLinkedin } from 'react-icons/ai'
 
 
-const socialLink = [
+const socialLink = [ 
   {
     path: "",
     icon : <AiFillYoutube className='group-hover:text-white w-4 h-5'/>,

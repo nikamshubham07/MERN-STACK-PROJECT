@@ -6,6 +6,7 @@ const Error = ({errMessage}) => {
         <h3 className='text-headingClor text-[20px] leading-[30px] font-semibold'>{errMessage}</h3>
     </div>
   )
-}
+} 
 
 export default Error
+ 

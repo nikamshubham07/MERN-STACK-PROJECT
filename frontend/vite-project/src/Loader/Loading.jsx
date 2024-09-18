@@ -7,6 +7,6 @@ const Loading = () => {
       <HashLoader color='#0067FF'/>
     </div>
   )
-}
+} 
 
 export default Loading

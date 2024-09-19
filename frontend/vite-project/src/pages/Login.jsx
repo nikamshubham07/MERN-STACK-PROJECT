@@ -13,7 +13,7 @@ const Login = () => {
 
   // Initialize the loading state correctly
   const [loading, setLoading] = useState(false);
-  
+   
   const navigate = useNavigate();
   const { dispatch } = useContext(authContext);
 

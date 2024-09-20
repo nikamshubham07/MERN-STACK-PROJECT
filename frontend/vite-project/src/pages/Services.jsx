@@ -10,7 +10,7 @@ const Services = () => {
           {services.map((item, index) => ( 
           <ServicesCard item={item} index={index} key={index}/>
           ))}
-        </div>
+        </div> 
       </div>
     </section>
   )

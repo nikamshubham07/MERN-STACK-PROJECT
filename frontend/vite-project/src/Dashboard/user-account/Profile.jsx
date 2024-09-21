@@ -7,13 +7,14 @@ import HashLoader from 'react-spinners/HashLoader';
 
 const Profile = ({ user }) => {
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    photo: null,
+    photo: '',
     gender: '',
-    bloodType: '',
+    bloodtype: '',
   });
 
   const navigate = useNavigate();
@@ -23,10 +24,9 @@ const Profile = ({ user }) => {
       setFormData({
         name: user.name || '',
         email: user.email || '',
-        password: '',
-        photo: user.photo || null,
+        photo: user.photo || '',
         gender: user.gender || '',
-        bloodType: user.bloodType || '',
+        bloodtype: user.bloodtype || '',
       });
     }
   }, [user]);
@@ -48,7 +48,7 @@ const Profile = ({ user }) => {
         throw new Error('Failed to upload image.');
       }
     } catch (error) {
-      toast.error(error.message || 'Failed to upload image');
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -57,6 +57,12 @@ const Profile = ({ user }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (!user || !user._id) {
+      toast.error("User ID is not available.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/users/${user._id}`, {
@@ -71,13 +77,13 @@ const Profile = ({ user }) => {
       const { message } = await res.json();
 
       if (!res.ok) {
-        throw new Error(message || 'Failed to update profile');
+        throw new Error(message);
       }
 
       toast.success(message);
-      navigate('/user/profile/me');
+      navigate('/users/profile/me');
     } catch (err) {
-      toast.error(err.message || 'Failed to update profile');
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -91,7 +97,7 @@ const Profile = ({ user }) => {
             type="text"
             placeholder="Full Name"
             name="name"
-            value={formData.name}
+            value={formData.name || ''}
             onChange={handleInputChange}
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             required
@@ -103,11 +109,10 @@ const Profile = ({ user }) => {
             type="email"
             placeholder="Enter Your Email"
             name="email"
-            value={formData.email}
+            value={formData.email || ''}
             onChange={handleInputChange}
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-            aria-readonly
-            readOnly
+            required
           />
         </div>
 
@@ -116,7 +121,7 @@ const Profile = ({ user }) => {
             type="password"
             placeholder="Password"
             name="password"
-            value={formData.password}
+            value={formData.password || ''}
             onChange={handleInputChange}
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
           />
@@ -126,8 +131,8 @@ const Profile = ({ user }) => {
           <input
             type="text"
             placeholder="Blood Type"
-            name="bloodType"
-            value={formData.bloodType}
+            name="bloodtype"
+            value={formData.bloodtype || ''}
             onChange={handleInputChange}
             className="w-full py-3 pr-4 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             required
@@ -139,7 +144,7 @@ const Profile = ({ user }) => {
             Gender:
             <select
               name="gender"
-              value={formData.gender}
+              value={formData.gender || ''}
               onChange={handleInputChange}
               className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
             >
@@ -172,7 +177,7 @@ const Profile = ({ user }) => {
               htmlFor="customFile"
               className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
             >
-              {selectedFile? selectedFile.name: "Upload Photo"}
+              Upload Photo
             </label>
           </div>
         </div>
@@ -183,11 +188,7 @@ const Profile = ({ user }) => {
             type="submit"
             className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3"
           >
-            {loading ? (
-              <HashLoader size={25} color="#ffffff" />
-            ) : (
-              'Update'
-            )}
+            {loading ? <HashLoader size={25} color="#ffffff" /> : "Update"}
           </button>
         </div>
       </form>

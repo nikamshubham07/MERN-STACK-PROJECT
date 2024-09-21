@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { authContext } from './../../context/AuthContext';
-// import userImg from '../../assets/images/doctor-img01.png';
+import userImg from '../../assets/images/doctor-img01.png';
 import MyBookings from './MyBookings';
 import Profile from './Profile';
-import useFetchData from '../../hooks/useFetchData';
+import useGetProfile from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 import Loading from '../../Loader/loading';
 import Error from '../../components/Error/Error';
@@ -12,16 +12,16 @@ import Error from '../../components/Error/Error';
 const MyAccount = () => {
   const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState('bookings');
-  const navigate = useNavigate();
-  const {data:userData, loading, error } = useFetchData(`${BASE_URL}/users/profile/me`);
+  // const navigate = useNavigate();
+  const {data:userData, loading, error } = useGetProfile(`${BASE_URL}/users/profile/me`);
 
-  console.log(userData, 'userdata');
+  // console.log(userData, 'userdata');
 
-  console.log("loading : ",loading, "error: ",error);
+  // console.log("loading : ",loading, "error: ",error);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate('/login'); 
+    // navigate('/login'); 
   };
 
   return (
@@ -34,7 +34,7 @@ const MyAccount = () => {
             <div className='pb-[50px] px-[30px] rounded-md'>
               <div className='flex items-center justify-center'>
                 <figure className='w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor'>
-                  <img src={userData.photo} alt='User Profile' className='w-full h-full rounded-full' />
+                  <img src={userImg} alt='User Profile' className='w-full h-full rounded-full' />
                 </figure>
               </div>
               <div className='text-center mt-4'>
@@ -50,7 +50,8 @@ const MyAccount = () => {
               </div>
               <div className='mt-[50px] md:mt-[100px]'>
                 <button onClick={handleLogout} className='w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white'>Logout</button>
-                <button className='w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white'>Delete account</button>
+                <button className='w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white'>Delete account
+                </button>
               </div>
             </div>
             <div className='md:col-span-2 md:px-[30px]'>

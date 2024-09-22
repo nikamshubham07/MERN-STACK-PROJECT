@@ -7,7 +7,7 @@ import Profile from './Profile';
 import useGetProfile from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 // import Loading from '../../Loader/loading';
-// import Loading from '../../Loader/loading';
+import Loading from '../../Loader/loading';
 import Error from '../../components/Error/Error';
 
 const MyAccount = () => {

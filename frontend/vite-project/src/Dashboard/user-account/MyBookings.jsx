@@ -2,7 +2,7 @@ import React from 'react';
 import useFetchData from '../../hooks/useFetchData';
 import { BASE_URL } from '../../config';
 import DoctorCard from './../../components/Doctors/DoctorCard';
-import Loading from '../../Loader/loading';
+import Loading from '../../Loader/Loading';
 import Error from '../../components/Error/Error';
 
 const MyBookings = () => {

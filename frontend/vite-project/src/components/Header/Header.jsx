@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo.png';
 import { NavLink, Link } from 'react-router-dom';
 import { BiMenu } from 'react-icons/bi';
 import { authContext } from '../../context/AuthContext.jsx';
-import HashLoader from 'react-spinners/HashLoader.js';
+// import HashLoader from 'react-spinners/HashLoader.js';
 
 const navLinks = [
   {
